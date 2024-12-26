@@ -6,6 +6,7 @@ import lombok.Getter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -35,6 +36,10 @@ public class Word {
     }
 
     public void applyAllRules() {
+        // If the word only contains punctuations, no need to apply the rules.
+        if (Pattern.matches("[.,;:!?\"'«»()\\[\\]{}\\-…\\s]*", this.text)) {
+            return;
+        }
         List<Rule> orderedRule = ALL_RULES.stream().sorted(Comparator.comparingInt(Rule::order)).toList();
         orderedRule.forEach(rule -> rule.execute(this));
     }

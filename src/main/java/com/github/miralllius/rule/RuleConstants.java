@@ -11,12 +11,12 @@ class RuleConstants {
 
     // CONSONANT
     final Collection<Character> CONSONANT_SET = Set.of(
-            'b', 'c', 'ç', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z');
+            'b', 'c', 'ç', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'z');
     final String CONSONANT_ID = "consonant";
 
     // VOWEL
     final Collection<Character> VOWEL_SET = Set.of(
-            'a', 'e', 'i', 'o', 'u', 'à', 'â', 'é', 'è', 'ë', 'ê', 'î', 'ï','ô', 'ù', 'û', 'ü');
+            'a', 'e', 'i', 'o', 'u', 'à', 'â', 'é', 'è', 'ë', 'ê', 'î', 'ï','ô', 'ù', 'û', 'ü', 'y');
     final String VOWEL_ID = "vowel";
 
     // EOW_DOUBLE_MUTE_LETTER
@@ -29,13 +29,14 @@ class RuleConstants {
     final String PATTERN_QU = "qu";
     final String PATTERN_GU = "gu";
     final String QU_GU_RULE_ID = "qu_gu_rule";
+    final RuleExcpt QU_GU_EXCPT = new RuleExcpt(Set.of("légume", "virgule", "gustave"));
 
     // H not behind a C
     final String H_NOT_BEHIND_C_ID = "h_not_behind_c";
 
     // EOW_CONSONANT
     final String EOW_CONSONANT_ID = "eow_consonant";
-    final RuleExcpt EOW_CONSONANT_EXCPT = new RuleExcpt(Set.of("huit", "bavoir", "coq", "cinq", "truc", "mur"));
+    final RuleExcpt EOW_CONSONANT_EXCPT = new RuleExcpt(Set.of("huit", "bavoir", "coq", "cinq", "truc", "mur", "sur", "il", "régal", "égal", "que", "de", "me", "te", "se", "je", "le", "ce"));
 
     // EOW_EZ
     final String EOW_EZ_ER_ET_ID = "eow_ez";
@@ -52,5 +53,8 @@ class RuleConstants {
     // PATTERN_FOLLOWED_BY_VOWEl
     final String PATTERN_FOLLOWED_VOWEL_ID = "followed_vowel";
     final Set<String> SET_PATTERN = Set.of("on" , "om", "an", "en", "am", "in", "im", "un", "ain" , "ein");
+
+    // ETRE VERB
+    final String ETRE_VERB_ID = "etre_verb";
 
 }

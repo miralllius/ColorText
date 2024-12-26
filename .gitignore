@@ -37,3 +37,9 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+# Ignore all .docx files
+*.docx
+
+# Exclude the specific file
+!loremIpsumFR.docx

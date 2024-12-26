@@ -6,6 +6,7 @@ import lombok.experimental.UtilityClass;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,9 +14,9 @@ import java.util.List;
 public class FileMapper {
     private static final String SPACE_CHAR = "\\s+";
 
-    public static Word[] mapParagraphToWordArray(XWPFParagraph paragraph) {
-        String text = paragraph.getText();
-        String[] words = text.split(SPACE_CHAR);
+    public static Word[] mapParagraphToWordArray(String text) {
+        String[] words = text.split("(?<=\\p{L})(?=\\P{L})|(?<=\\P{L})(?=\\p{L})"); // Splits the text by punctuation and space while keeping them.
+        // I.e. "J'aime ." becomes ["J", "'", "aime", " ", "."]
         return mapStringsToWords(words);
     }
 
@@ -31,10 +32,6 @@ public class FileMapper {
             run.setText(String.valueOf(word.charAt(i)));
             run.setColor(colors.get(i).getHexCode());
         }
-
-        // Add a space after the word
-        XWPFRun spaceRun = paragraph.createRun();
-        spaceRun.setText(" ");
     }
 
     private Word[] mapStringsToWords (String[] words) {

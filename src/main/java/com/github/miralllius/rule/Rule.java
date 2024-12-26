@@ -14,19 +14,19 @@ import static com.github.miralllius.rule.RuleConstants.*;
 public record Rule(String id, int order, int numberLetterAffected, @NotNull Color color,
                    @NotNull RuleExcpt exception, @Nullable String description) {
 
-    public void execute(Word word){
+    public void execute(Word word) {
         if (ruleIsValid(word)) {
             applyRule(word);
         }
     }
 
     private boolean ruleIsValid(Word word){
-        return this.numberLetterAffected <= word.length() && !this.exception.exceptions.contains(word.getText());
+        return this.numberLetterAffected <= word.length() && !this.exception.exceptions.contains(word.getText().toLowerCase());
     }
 
     private void applyRule(Word word){
         String text = word.getTextLowerCase();
-        switch (this.id){
+        switch (this.id) {
             case VOWEL_ID:
                 applyVowelRule(word, text);
                 break;
@@ -53,6 +53,9 @@ public record Rule(String id, int order, int numberLetterAffected, @NotNull Colo
                 break;
             case PATTERN_FOLLOWED_VOWEL_ID:
                 applyPatternFollowedVowelRule(word, text);
+                break;
+            case ETRE_VERB_ID:
+                applyEtreVerbeRule(word, text);
                 break;
             default:
                 throw new NotImplementedException("Rule not implemented: " + this.id);
@@ -138,7 +141,7 @@ public record Rule(String id, int order, int numberLetterAffected, @NotNull Colo
         if (text.equals(PATTERN_DES) || text.equals(PATTERN_LES)) {
             word.setCharColor(1, this.color);
             word.setCharColor(2, this.color);
-        } else if( text.equals(PATTERN_EST)) {
+        } else if (text.equals(PATTERN_EST)) {
             word.setCharColor(0, this.color);
             word.setCharColor(1, this.color);
         }
@@ -158,4 +161,34 @@ public record Rule(String id, int order, int numberLetterAffected, @NotNull Colo
             }
         }
     }
+
+    private void applyEtreVerbeRule(Word word, String text) {
+        switch (text) {
+            case "es":
+                word.setCharColor(0, Color.RED);
+                word.setCharColor(1, Color.RED);
+                break;
+            case "est":
+                word.setCharColor(0, Color.RED);
+                word.setCharColor(1, Color.RED);
+                word.setCharColor(2, Color.RED);
+                break;
+            case "sommes":
+                word.setCharColor(0,Color.BLACK);
+                word.setCharColor(1,Color.RED);
+                word.setCharColor(2,Color.BLACK);
+                word.setCharColor(3,Color.BLACK);
+                word.setCharColor(4,Color.GREY);
+                word.setCharColor(5,Color.GREY);
+                break;
+            case "êtes", "etes":
+                word.setCharColor(0,Color.RED);
+                word.setCharColor(1,Color.BLACK);
+                word.setCharColor(2,Color.GREY);
+                word.setCharColor(3,Color.GREY);
+                break;
+            default:
+        }
+    }
+
 }
